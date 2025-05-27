@@ -1,0 +1,69 @@
+{
+    "idCliente": 1,
+    "idProducto": 3,
+    "calificacion": 5,
+    "comentario": "Una fragancia intensa y elegante. Ideal para eventos nocturnos."
+  }
+----------------------
+{
+    "idCliente": 2,
+    "idProducto": 5,
+    "calificacion": 4,
+    "comentario": "Muy fresco y cítrico. Perfecto para el verano."
+  }
+--------------------
+{
+    "idCliente": 3,
+    "idProducto": 1,
+    "calificacion": 3,
+    "comentario": "El aroma es agradable, aunque se desvanece un poco rápido."
+  }
+--------------------------
+{
+    "idCliente": 4,
+    "idProducto": 7,
+    "calificacion": 5,
+    "comentario": "Relajante y natural, me encanta el olor a lavanda."
+  }
+--------------------------
+{
+    "idCliente": 5,
+    "idProducto": 2,
+    "calificacion": 4,
+    "comentario": "Un aroma fresco que dura todo el día. Muy recomendable."
+  }
+-----------------------
+{
+    "idCliente": 6,
+    "idProducto": 6,
+    "calificacion": 2,
+    "comentario": "Demasiado dulce para mi gusto. No lo volvería a comprar."
+  }
+--------------------------
+ {
+    "idCliente": 7,
+    "idProducto": 4,
+    "calificacion": 5,
+    "comentario": "Fragancia romántica y suave. Ideal para ocasiones especiales."
+  }
+---------------------------------
+{
+    "idCliente": 8,
+    "idProducto": 10,
+    "calificacion": 3,
+    "comentario": "Me gusta el aroma frutal, aunque esperaba que durara más."
+  }
+----------------------------
+{
+    "idCliente": 9,
+    "idProducto": 9,
+    "calificacion": 4,
+    "comentario": "Muy natural y herbal. Lo uso todos los días."
+  }
+-----------------------------
+{
+    "idCliente": 10,
+    "idProducto": 8,
+    "calificacion": 5,
+    "comentario": "Me sorprendió la calidad, huele increíble y dura horas."
+  }
