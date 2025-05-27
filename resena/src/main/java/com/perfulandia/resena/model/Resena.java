@@ -25,12 +25,12 @@ public class Resena {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_resena;
-    private int clienteId;
-    private int id_producto;
+    private int idResena;
+    private int idCliente;
+    private int idProducto;
     private int calificacion;
 
-    @Column(length = 250, nullable = true)
+    @Column(length = 250)
     private String comentario;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Santiago")

@@ -18,6 +18,9 @@ public class ResenaService {
     }
 
     public Resena guardar(Resena resena){
+        if(resena.getCalificacion() < 1 || resena.getCalificacion() > 5) {
+            throw new IllegalArgumentException("La calificación debe estar entre 1 y 5");
+        }
         return resenaRepository.save(resena);
     }
 }
