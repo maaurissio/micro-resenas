@@ -1,5 +1,8 @@
 package com.perfulandia.resena.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,27 +39,15 @@ public class ResenaServiceTest {
         verify(resenaRepository).save(resena);
     }
 
+    @Test
+    void testListarResenas(){
+        Resena r1 = new Resena(1, 1, 1, 5, "muy bueno", null);
+        Resena r2 = new Resena(2, 2, 1, 0, "muy malo", null);
+        when(resenaRepository.findAll()).thenReturn(Arrays.asList(r1, r2));
 
-// @Test
-//     void testGuardarMascota() {
-//         Mascota mascota = new Mascota(null, "Rex", "Perro", 5);
-//         Mascota mascotaGuardada = new Mascota(1L, "Rex", "Perro", 5);
-//         when(mascotaRepository.save(mascota)).thenReturn(mascotaGuardada);
-
-//         Mascota resultado = mascotaService.guardarMascota(mascota);
-//         assertThat(resultado.getId()).isEqualTo(1L);
-//         verify(mascotaRepository).save(mascota);
-//     }
-
-
-
-
-
-
-
-
-
-
-
+        List<Resena> resultado = resenaService.resenas();
+        assertThat(resultado).hasSize(2).contains(r1, r2);
+        verify(resenaRepository).findAll();
+    }
 
 }
