@@ -29,9 +29,9 @@ public class ResenaServiceTest {
 
     @Test
     void testGuardarResena(){
-        Resena resena = new Resena(1, 1, 1, 5, "muy bueno", null);
+        Resena resena = new Resena(null, 1, 1, 5, "muy bueno", null);
         //Resena r2 = new Resena(2, 2, 1, 1, "muy malo", null);
-        Resena resenaGuardada = new Resena(1, 1, 5, 0, "muy bueno", null);
+        Resena resenaGuardada = new Resena(null, 1, 5, 0, "muy bueno", null);
         when(resenaRepository.save(resena)).thenReturn(resenaGuardada);
 
         Resena resultado = resenaService.guardar(resena);
@@ -41,8 +41,8 @@ public class ResenaServiceTest {
 
     @Test
     void testListarResenas(){
-        Resena r1 = new Resena(1, 1, 1, 5, "muy bueno", null);
-        Resena r2 = new Resena(2, 2, 1, 0, "muy malo", null);
+        Resena r1 = new Resena(null, 1, 1, 5, "muy bueno", null);
+        Resena r2 = new Resena(null, 2, 1, 0, "muy malo", null);
         when(resenaRepository.findAll()).thenReturn(Arrays.asList(r1, r2));
 
         List<Resena> resultado = resenaService.resenas();

@@ -25,7 +25,7 @@ public class Resena {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idResena;
+    private Long idResena;
     private int idCliente;
     private int idProducto;
     private int calificacion;
