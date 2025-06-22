@@ -42,4 +42,20 @@ public class ResenaService {
 
         return resenaRepository.save(resenaExistente);
     }
+
+    public Object buscarResenasPorProducto(Resena filtro) {
+        if (filtro == null || filtro.getIdProducto() <= 0) {
+            return "ID de producto inválido";
+        }
+        List<Resena> reseñas = resenaRepository.findByIdProducto(filtro.getIdProducto());
+        return reseñas.isEmpty() ? "No hay reseñas para el producto con ID: " + filtro.getIdProducto() : reseñas;
+    }
+
+    public void eliminarResena(Long idResena){
+        if(!resenaRepository.existsById(idResena)){
+            throw new IllegalArgumentException("Reseña no encontrada");
+        }
+        resenaRepository.deleteById(idResena);
+    }
+
 }

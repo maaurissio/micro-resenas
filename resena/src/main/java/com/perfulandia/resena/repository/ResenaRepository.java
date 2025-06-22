@@ -9,5 +9,5 @@ import com.perfulandia.resena.model.Resena;
 
 @Repository
 public interface ResenaRepository extends JpaRepository<Resena, Long> {
-    List<Resena> findByIdProducto(Long idProducto);
+    List<Resena> findByIdProducto(int idProducto);
 }
