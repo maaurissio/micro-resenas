@@ -1,9 +1,7 @@
 package com.perfulandia.resena.controller;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,20 +35,25 @@ public class ResenaController {
 
     @PostMapping
     public ResponseEntity<Resena> guardar(@RequestBody Resena resena){
-        resena.setFecha_resena(LocalDateTime.now());
-        Resena resenaGuardada = resenaService.guardar(resena);
-        return new ResponseEntity<>(resenaGuardada, HttpStatus.CREATED);
+        try {
+            resena.setFecha_resena(LocalDateTime.now());
+            Resena resenaGuardada = resenaService.guardar(resena);
+            return new ResponseEntity<>(resenaGuardada, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{idResena}")
-    public ResponseEntity<Object> modificarResena(@PathVariable Long idResena, @RequestBody Resena resena) {
+    public ResponseEntity<Resena> modificarResena(@PathVariable Long idResena, @RequestBody Resena resena) {
         try {
             Resena resenaModificada = resenaService.modificarResena(idResena, resena);
             return new ResponseEntity<>(resenaModificada, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+            if (e.getMessage().contains("no encontrada")) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -58,20 +61,18 @@ public class ResenaController {
     public ResponseEntity<Object> buscarResenasPorProducto(@RequestBody Resena filtro) {
         Object resultado = resenaService.buscarResenasPorProducto(filtro);
         if (resultado instanceof String) {
-            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(resultado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idResena}")
-    public ResponseEntity<Object> eliminarResena(@PathVariable Long idResena){
+    public ResponseEntity<Void> eliminarResena(@PathVariable Long idResena){
         try {
             resenaService.eliminarResena(idResena);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
