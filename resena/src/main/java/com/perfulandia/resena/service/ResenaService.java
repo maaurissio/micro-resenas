@@ -17,6 +17,11 @@ public class ResenaService {
         return resenaRepository.findAll();
     }
 
+    public Resena buscarPorId(Long id) {
+        return resenaRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Reseña no encontrada con ID: " + id));
+    }
+
     public Resena guardar(Resena resena){
         if(resena.getCalificacion() < 1 || resena.getCalificacion() > 5) {
             throw new IllegalArgumentException("La calificación debe estar entre 1 y 5");
