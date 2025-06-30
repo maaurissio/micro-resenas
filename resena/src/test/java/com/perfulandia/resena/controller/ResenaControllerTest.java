@@ -189,9 +189,20 @@ class ResenaControllerTest {
     }
 
     @Test
-    void testEliminar_DebeRetornar400BadRequest() throws Exception {
+    void testEliminar_DebeRetornar404NotFound() throws Exception {
         // Given
         doThrow(new IllegalArgumentException("Reseña no encontrada"))
+                .when(resenaService).eliminarResena(1L);
+
+        // When & Then
+        mockMvc.perform(delete("/api/resena/1"))
+                .andExpect(status().isNotFound()); // 404
+    }
+
+    @Test
+    void testEliminar_DebeRetornar400BadRequest() throws Exception {
+        // Given
+        doThrow(new IllegalArgumentException("Error de validación"))
                 .when(resenaService).eliminarResena(1L);
 
         // When & Then
