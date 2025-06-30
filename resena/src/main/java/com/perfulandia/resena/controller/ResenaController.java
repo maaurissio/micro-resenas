@@ -115,7 +115,7 @@ public class ResenaController {
         }
     }
 
-    @PutMapping("/{idResena}")
+    @PutMapping("/{id}")
     @Operation(summary = "Actualizar reseña", description = "Actualiza una reseña existente")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Reseña actualizada exitosamente",
@@ -124,15 +124,15 @@ public class ResenaController {
         @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos")
     })
     public ResponseEntity<EntityModel<Resena>> modificarResena(
-            @Parameter(description = "ID de la reseña a actualizar", required = true) @PathVariable Long idResena, 
+            @Parameter(description = "ID de la reseña a actualizar", required = true) @PathVariable Long id, 
             @Parameter(description = "Nuevos datos de la reseña", required = true) @RequestBody Resena resena) {
         try {
-            Resena resenaModificada = resenaService.modificarResena(idResena, resena);
+            Resena resenaModificada = resenaService.modificarResena(id, resena);
             
             EntityModel<Resena> resenaModel = EntityModel.of(resenaModificada)
-                .add(linkTo(methodOn(ResenaController.class).obtenerResenaPorId(idResena)).withSelfRel())
+                .add(linkTo(methodOn(ResenaController.class).obtenerResenaPorId(id)).withSelfRel())
                 .add(linkTo(methodOn(ResenaController.class).getResenas()).withRel("todas"))
-                .add(linkTo(methodOn(ResenaController.class).eliminarResena(idResena)).withRel("eliminar"));
+                .add(linkTo(methodOn(ResenaController.class).eliminarResena(id)).withRel("eliminar"));
             
             return new ResponseEntity<>(resenaModel, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -174,18 +174,22 @@ public class ResenaController {
         return new ResponseEntity<>(collectionModel, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{idResena}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar reseña", description = "Elimina una reseña por su ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Reseña eliminada exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Error al eliminar la reseña")
+        @ApiResponse(responseCode = "400", description = "Error al eliminar la reseña"),
+        @ApiResponse(responseCode = "404", description = "Reseña no encontrada")
     })
     public ResponseEntity<Void> eliminarResena(
-            @Parameter(description = "ID de la reseña a eliminar", required = true) @PathVariable Long idResena){
+            @Parameter(description = "ID de la reseña a eliminar", required = true) @PathVariable Long id){
         try {
-            resenaService.eliminarResena(idResena);
+            resenaService.eliminarResena(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
+            if (e.getMessage().contains("no encontrada")) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
